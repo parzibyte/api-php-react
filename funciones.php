@@ -1,4 +1,18 @@
 <?php
+function actualizarVideojuego($videojuego)
+{
+    $bd = obtenerConexion();
+    $sentencia = $bd->prepare("UPDATE videojuegos SET nombre = ?, precio = ?, calificacion = ? WHERE id = ?");
+    return $sentencia->execute([$videojuego->nombre, $videojuego->precio, $videojuego->calificacion, $videojuego->id]);
+}
+
+function obtenerVideojuegoPorId($id)
+{
+    $bd = obtenerConexion();
+    $sentencia = $bd->prepare("SELECT id, nombre, precio, calificacion FROM videojuegos WHERE id = ?");
+    $sentencia->execute([$id]);
+    return $sentencia->fetchObject();
+}
 
 function obtenerVideojuegos()
 {
@@ -6,6 +20,7 @@ function obtenerVideojuegos()
     $sentencia = $bd->query("SELECT id, nombre, precio, calificacion FROM videojuegos");
     return $sentencia->fetchAll();
 }
+
 function guardarVideojuego($videojuego)
 {
     $bd = obtenerConexion();
