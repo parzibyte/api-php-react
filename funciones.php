@@ -1,4 +1,12 @@
 <?php
+
+function eliminarVideojuego($id)
+{
+    $bd = obtenerConexion();
+    $sentencia = $bd->prepare("DELETE FROM videojuegos WHERE id = ?");
+    return $sentencia->execute([$id]);
+}
+
 function actualizarVideojuego($videojuego)
 {
     $bd = obtenerConexion();
